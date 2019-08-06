@@ -1,0 +1,14 @@
+{
+  "name": "phaser-test",
+  "version": "1.0.0",
+  "description": "testing phaser",
+  "main": "src/core.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "author": "Kimbsy",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.18.1"
+  }
+}
