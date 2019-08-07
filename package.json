@@ -1,0 +1,7 @@
+{
+	"name": "Dunjeon-jam",
+	"version": "1.0.0",
+	"dependencies": {
+		"phaser": "^3.18.1"
+	}
+}
