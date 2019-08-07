@@ -40,7 +40,7 @@ function create () {
 
     this.add.image(400, 300, 'background');
 
-    player = this.physics.add.sprite(100, 100, 'player').setScale(0.5);
+    player = this.physics.add.sprite(100, 100, 'player').setScale(0.25);
     player.setCollideWorldBounds(true);
     player.setBounce(0);
     player.setData('sticking', 'INITIAL');
