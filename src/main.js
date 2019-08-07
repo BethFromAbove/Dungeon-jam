@@ -6,7 +6,7 @@ const config = {
     width: screenWidth,
     height: screenHeight,
     backgroundColor: 'rgb(255, 255, 255)',
-    parent: "container",
+    parent: 'container',
     physics: {
         default: 'arcade',
         arcade: {
@@ -21,6 +21,7 @@ const config = {
 };
 
 var player;
+var playerDirection;
 var walls;
 var rocks;
 
@@ -42,7 +43,8 @@ function create () {
     player = this.physics.add.sprite(100, 100, 'player').setScale(0.5);
     player.setCollideWorldBounds(true);
     player.setBounce(0);
-    player.setData("sticking", "INITIAL");
+    player.setData('sticking', 'INITIAL');
+    playerDirection = 'UP';
 
     walls = this.physics.add.staticGroup();
     walls.create(0, 0, 'wall').setScale(10, 0.1).refreshBody();
@@ -64,113 +66,105 @@ function stickToWall() {
     var touching = player.body.touching;
 
     if (touching.none) {
-        player.setData("sticking", null);
+        player.setData('sticking', null);
         return;
     }
 
-    if (touching.up) direction = "up";
-    if (touching.down) direction = "down";
-    if (touching.left) direction = "left";
-    if (touching.right) direction = "right";
+    if (touching.up) direction = 'UP';
+    if (touching.down) direction = 'DOWN';
+    if (touching.left) direction = 'LEFT';
+    if (touching.right) direction = 'RIGHT';
 
-    player.setData("sticking", direction);
+    player.setData('sticking', direction);
 }
 
 function destroyRock(rock, wall) {
     rock.destroy();
 }
 
-function getDirection() {
-    if (cursors.up.isDown) {
-        return "up";
-    } else if (cursors.down.isDown) {
-        return "down";
-    } else if (cursors.left.isDown) {
-        return "left";
-    } else if (cursors.right.isDown) {
-        return "right";
-    }
+function currentDirection() {
+    if (cursors.up.isDown) return 'UP';
+    if (cursors.down.isDown) return 'DOWN';
+    if (cursors.left.isDown) return 'LEFT';
+    if (cursors.right.isDown) return 'RIGHT';
+    return playerDirection;
+}
+
+function anyCursorHeld() {
+    return cursors.up.isDown || cursors.down.isDown || cursors.left.isDown || cursors.right.isDown;
 }
 
 function attemptJumpThrow(context) {
 
-    direction = getDirection();
+    if (anyCursorHeld()) {
+        direction = playerDirection
 
-    // Do a jump if you're stuck to a wall
-    if (player.getData("sticking")) {
-        switch (direction) {
-            case "up":
-                player.setVelocityY(-300);
+        var directionPolarity = player.getData('sticking') ? 1 : -1;
+
+        switch (playerDirection) {
+            case 'UP':
+                player.setVelocityY(-300 * directionPolarity);
                 player.setVelocityX(0);
                 break;
-            case "down":
-                player.setVelocityY(300);
+            case 'DOWN':
+                player.setVelocityY(300 * directionPolarity);
                 player.setVelocityX(0);
                 break;
-            case "left":
+            case 'LEFT':
                 player.setVelocityY(0);
-                player.setVelocityX(-300);
+                player.setVelocityX(-300 * directionPolarity);
                 break;
-            case "right":
+            case 'RIGHT':
                 player.setVelocityY(0);
-                player.setVelocityX(300);
+                player.setVelocityX(300 * directionPolarity);
                 break;
         }
-        player.setData("sticking", null);
-    }
-    // Do a throw if you're in mid air
-    else {
-        switch (direction) {
-            case "up":
-                player.setVelocityY(300);
-                player.setVelocityX(0);
-                break;
-            case "down":
-                player.setVelocityY(-300);
-                player.setVelocityX(0);
-                break;
-            case "left":
-                player.setVelocityY(0);
-                player.setVelocityX(300);
-                break;
-            case "right":
-                player.setVelocityY(0);
-                player.setVelocityX(-300);
-                break;
+
+        // Do a throw if you're in mid air
+        if (!player.getData('sticking')) {
+            throwRock(player.x, player.y);
         }
-        throwRock(player.x, player.y, direction);
+
+        player.setData('sticking', null);
     }
 }
 
-function throwRock(x, y, direction) {
+function throwRock(x, y) {
 
-    var r = rocks.create(x, y, 'rock').setScale(0.1);
+    var r = rocks.create(x, y, 'rock').setScale(0.05);
 
-    switch (direction) {
-        case "up":
+    switch (playerDirection) {
+        case 'UP':
             r.setVelocityY(-600);
             break;
-        case "down":
+        case 'DOWN':
             r.setVelocityY(600);
             break;
-        case "left":
+        case 'LEFT':
             r.setVelocityX(-600);
             break;
-        case "right":
+        case 'RIGHT':
             r.setVelocityX(600);
             break;
     }
 }
 
 function update () {
-    if (cursors.up.isDown) {
-        player.angle = 0;
-    } else if (cursors.down.isDown) {
-        player.angle = 180;
-    } else if (cursors.left.isDown) {
-        player.angle = 270;
-    } else if (cursors.right.isDown) {
-        player.angle = 90;
+
+    var playerDirection = currentDirection();
+
+    switch (playerDirection) {
+        case 'UP':
+            player.angle = 0;
+            break;
+        case 'DOWN':
+            player.angle = 180;
+            break;
+        case 'LEFT':
+            player.angle = 270;
+            break;
+        case 'RIGHT':
+            player.angle = 90;
+            break;
     }
 }
-
