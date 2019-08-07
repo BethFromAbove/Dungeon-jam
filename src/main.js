@@ -55,7 +55,7 @@ function create () {
     rocks = this.physics.add.group();
 
     this.physics.add.collider(player, walls, stickToWall);
-    this.physics.add.collider(rocks, walls, destroyRock, null, this);
+    this.physics.add.collider(rocks, walls, destroyRock);
 
     cursors = this.input.keyboard.createCursorKeys();
     this.input.keyboard.on('keydown-SPACE', attemptJumpThrow, null);
@@ -151,7 +151,7 @@ function throwRock(x, y) {
 
 function update () {
 
-    var playerDirection = currentDirection();
+    playerDirection = currentDirection();
 
     switch (playerDirection) {
         case 'UP':
