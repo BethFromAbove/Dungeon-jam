@@ -173,4 +173,3 @@ function update () {
         player.angle = 90;
     }
 }
-
