@@ -64,7 +64,7 @@ function create () {
     this.input.keyboard.on('keydown-SPACE', attemptJumpThrow, null);
 
     this.cameras.main.setSize(screenWidth, screenHeight);
-    this.cameras.main.startFollow(player);
+    this.cameras.main.startFollow(player, 1, 0.1, 0.1);
 }
 
 function stickToWall() {
