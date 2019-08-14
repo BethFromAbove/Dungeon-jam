@@ -29,6 +29,9 @@ var cursors;
 
 var game = new Phaser.Game(config);
 
+/**
+ * Load up our image assets.
+ */
 function preload () {
     this.load.image('background', 'assets/background.png');
     this.load.image('player', 'assets/player.png');
@@ -99,53 +102,32 @@ function attemptJumpThrow(context) {
     if (anyCursorHeld()) {
         direction = playerDirection
 
-        var directionPolarity = player.getData('sticking') ? 1 : -1;
+        var r = rocks.create(player.x, player.y, 'rock').setScale(0.05);
 
         switch (playerDirection) {
             case 'UP':
-                player.setVelocityY(-300 * directionPolarity);
+                player.setVelocityY(300);
                 player.setVelocityX(0);
+                r.setVelocityY(-600);
                 break;
             case 'DOWN':
-                player.setVelocityY(300 * directionPolarity);
+                player.setVelocityY(-300);
                 player.setVelocityX(0);
+                r.setVelocityY(600);
                 break;
             case 'LEFT':
                 player.setVelocityY(0);
-                player.setVelocityX(-300 * directionPolarity);
+                player.setVelocityX(300);
+                r.setVelocityX(-600);
                 break;
             case 'RIGHT':
                 player.setVelocityY(0);
-                player.setVelocityX(300 * directionPolarity);
+                player.setVelocityX(-300);
+                r.setVelocityX(600);
                 break;
         }
 
-        // Do a throw if you're in mid air
-        if (!player.getData('sticking')) {
-            throwRock(player.x, player.y);
-        }
-
         player.setData('sticking', null);
-    }
-}
-
-function throwRock(x, y) {
-
-    var r = rocks.create(x, y, 'rock').setScale(0.05);
-
-    switch (playerDirection) {
-        case 'UP':
-            r.setVelocityY(-600);
-            break;
-        case 'DOWN':
-            r.setVelocityY(600);
-            break;
-        case 'LEFT':
-            r.setVelocityX(-600);
-            break;
-        case 'RIGHT':
-            r.setVelocityX(600);
-            break;
     }
 }
 
