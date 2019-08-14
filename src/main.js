@@ -62,6 +62,9 @@ function create () {
 
     cursors = this.input.keyboard.createCursorKeys();
     this.input.keyboard.on('keydown-SPACE', attemptJumpThrow, null);
+
+    this.cameras.main.setSize(screenWidth, screenHeight);
+    this.cameras.main.startFollow(player);
 }
 
 function stickToWall() {
