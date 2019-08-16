@@ -9,6 +9,14 @@
   "author": "Kimbsy",
   "license": "ISC",
   "dependencies": {
-    "phaser": "^3.18.1"
-  }
+    "phaser": "^3.19.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BethFromAbove/Dungeon-jam.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BethFromAbove/Dungeon-jam/issues"
+  },
+  "homepage": "https://github.com/BethFromAbove/Dungeon-jam#readme"
 }

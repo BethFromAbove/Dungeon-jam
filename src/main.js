@@ -37,6 +37,8 @@ function preload () {
     this.load.image('player', 'assets/player.png');
     this.load.image('wall', 'assets/wall.png');
     this.load.image('rock', 'assets/rock.png');
+    this.load.image('tiles', 'assets/tiletest3.png')
+    this.load.tilemapTiledJSON("mymap", 'assets/testmap4.json');
 }
 
 function create () {
@@ -44,16 +46,16 @@ function create () {
     this.add.image(400, 300, 'background');
 
     player = this.physics.add.sprite(100, 100, 'player').setScale(0.25);
-    player.setCollideWorldBounds(true);
+    player.setCollideWorldBounds(false);
     player.setBounce(0);
     player.setData('sticking', 'INITIAL');
     playerDirection = 'UP';
 
     walls = this.physics.add.staticGroup();
-    walls.create(0, 0, 'wall').setScale(10, 0.1).refreshBody();
-    walls.create(0, 0, 'wall').setScale(0.1, 10).refreshBody();
-    walls.create(screenWidth, screenHeight, 'wall').setScale(10, 0.1).refreshBody();
-    walls.create(screenWidth, screenHeight, 'wall').setScale(0.1, 10).refreshBody();
+    // walls.create(0, 0, 'wall').setScale(10, 0.1).refreshBody();
+    // walls.create(0, 0, 'wall').setScale(0.1, 10).refreshBody();
+    // walls.create(screenWidth, screenHeight, 'wall').setScale(10, 0.1).refreshBody();
+    // walls.create(screenWidth, screenHeight, 'wall').setScale(0.1, 10).refreshBody();
 
     rocks = this.physics.add.group();
 
@@ -65,6 +67,21 @@ function create () {
 
     this.cameras.main.setSize(screenWidth, screenHeight);
     this.cameras.main.startFollow(player, 1, 0.04, 0.04);
+
+    const map = this.make.tilemap({ key: "mymap" });
+
+    // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
+    // Phaser's cache (i.e. the name you used in preload)
+    const tileset = map.addTilesetImage("tiletest3", "tiles");
+  
+    // Parameters: layer name (or index) from Tiled, tileset, x, y
+    const bg = map.createStaticLayer("background", tileset, 0, 0);
+    const layer = map.createStaticLayer("world", tileset,0,0);
+
+    layer.setCollisionByProperty({ collides: true });
+
+
+    this.physics.add.collider(player, layer, function(){console.log("COLLIDING WITH TILEMAP")});
 }
 
 function stickToWall() {
