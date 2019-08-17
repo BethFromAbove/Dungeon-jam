@@ -35,53 +35,64 @@ var game = new Phaser.Game(config);
 function preload () {
     this.load.image('background', 'assets/background.png');
     this.load.image('player', 'assets/player.png');
-    this.load.image('wall', 'assets/wall.png');
     this.load.image('rock', 'assets/rock.png');
     this.load.image('tiles', 'assets/tiletest3.png')
     this.load.tilemapTiledJSON("mymap", 'assets/testmap4.json');
+    this.load.multiatlas('spaceman', '/assets/tiles/Character/spacesprite1.json', 'assets/tiles/Character');
+
 }
 
 function create () {
 
-    this.add.image(400, 300, 'background');
-
-    player = this.physics.add.sprite(100, 100, 'player').setScale(0.25);
-    player.setCollideWorldBounds(false);
-    player.setBounce(0);
-    player.setData('sticking', 'INITIAL');
-    playerDirection = 'UP';
-
-    walls = this.physics.add.staticGroup();
-    // walls.create(0, 0, 'wall').setScale(10, 0.1).refreshBody();
-    // walls.create(0, 0, 'wall').setScale(0.1, 10).refreshBody();
-    // walls.create(screenWidth, screenHeight, 'wall').setScale(10, 0.1).refreshBody();
-    // walls.create(screenWidth, screenHeight, 'wall').setScale(0.1, 10).refreshBody();
-
-    rocks = this.physics.add.group();
-
-    this.physics.add.collider(player, walls, stickToWall);
-    this.physics.add.collider(rocks, walls, destroyRock);
-
-    cursors = this.input.keyboard.createCursorKeys();
-    this.input.keyboard.on('keydown-SPACE', attemptJumpThrow, null);
-
-    this.cameras.main.setSize(screenWidth, screenHeight);
-    this.cameras.main.startFollow(player, 1, 0.04, 0.04);
-
+    //-- MAP LOADING --
     const map = this.make.tilemap({ key: "mymap" });
 
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
     const tileset = map.addTilesetImage("tiletest3", "tiles");
-  
+    
     // Parameters: layer name (or index) from Tiled, tileset, x, y
+    //background layer (no collisions)
     const bg = map.createStaticLayer("background", tileset, 0, 0);
+    //world layer  (collisions enabled)
     const layer = map.createStaticLayer("world", tileset,0,0);
+    layer.setCollisionBetween(0,230, true); 
 
-    layer.setCollisionBetween(0,230, true);
+
+    // -- PLAYER LOADING --
+    player = this.physics.add.sprite(100, 100, 'spaceman');
+
+    //player anims
+    var confusedframes = this.anims.generateFrameNames('spaceman', {
+        start: 1, end: 4, zeroPad: 3,
+        prefix: 'astropantsed', suffix: '.png'
+    });
+    this.anims.create({ key: 'confused', frames: confusedframes, frameRate: 4, repeat: -1 });
+
+    //start player
+    player.anims.play('confused', true);            
+
+    player.setCollideWorldBounds(false);
+    player.setBounce(0);
+    player.setData('sticking', 'INITIAL');
+    playerDirection = 'UP';
 
 
+    //-- PHYSICS RULES --
+    rocks = this.physics.add.group();
     this.physics.add.collider(player, layer, function(){console.log("COLLIDING WITH TILEMAP")});
+
+    //this.physics.add.collider(player, walls, stickToWall);
+    //this.physics.add.collider(rocks, walls, destroyRock);
+
+    //-- INPUT CONTROLS --
+    cursors = this.input.keyboard.createCursorKeys();
+    this.input.keyboard.on('keydown-SPACE', attemptJumpThrow, null);
+      
+    //-- CAMERA SETTINGS --
+    this.cameras.main.setSize(screenWidth, screenHeight);
+    this.cameras.main.startFollow(player, 1, 0.04, 0.04);
+  
 }
 
 function stickToWall() {
@@ -156,17 +167,19 @@ function update () {
     playerDirection = currentDirection();
 
     switch (playerDirection) {
-        case 'UP':
-            player.angle = 0;
-            break;
-        case 'DOWN':
-            player.angle = 180;
-            break;
-        case 'LEFT':
-            player.angle = 270;
-            break;
-        case 'RIGHT':
-            player.angle = 90;
+        // case 'UP':
+        //     player.angle = 0;
+        //     break;
+        // case 'DOWN':
+        //     player.angle = 180;
+        //     break;
+        // case 'LEFT':
+        //     player.angle = 270;
+        //     break;
+        // case 'RIGHT':
+        //     player.angle = 90;
+        //     break;
+        default:
             break;
     }
 }
