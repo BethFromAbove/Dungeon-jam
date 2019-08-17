@@ -5,7 +5,7 @@ const config = {
     type: Phaser.AUTO,
     width: screenWidth,
     height: screenHeight,
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: 'rgb(20,20,20)',
     parent: 'container',
     physics: {
         default: 'arcade',
@@ -78,7 +78,7 @@ function create () {
     const bg = map.createStaticLayer("background", tileset, 0, 0);
     const layer = map.createStaticLayer("world", tileset,0,0);
 
-    layer.setCollisionByProperty({ collides: true });
+    layer.setCollisionBetween(0,230, true);
 
 
     this.physics.add.collider(player, layer, function(){console.log("COLLIDING WITH TILEMAP")});
