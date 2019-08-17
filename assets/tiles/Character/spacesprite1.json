@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "spacesprite1.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 328,
+				"h": 117
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "astropantsed001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 120
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 5,
+						"w": 80,
+						"h": 115
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 80,
+						"h": 115
+					}
+				},
+				{
+					"filename": "astropantsed002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 120
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 5,
+						"w": 80,
+						"h": 115
+					},
+					"frame": {
+						"x": 83,
+						"y": 1,
+						"w": 80,
+						"h": 115
+					}
+				},
+				{
+					"filename": "astropantsed003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 120
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 5,
+						"w": 80,
+						"h": 115
+					},
+					"frame": {
+						"x": 165,
+						"y": 1,
+						"w": 80,
+						"h": 115
+					}
+				},
+				{
+					"filename": "astropantsed004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 96,
+						"h": 120
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 5,
+						"w": 80,
+						"h": 115
+					},
+					"frame": {
+						"x": 247,
+						"y": 1,
+						"w": 80,
+						"h": 115
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:e9d0617c0676f4f2cfbc72833f86108c:4c30a0a9d8f65abbdf5d04259726b47a:49486c85c08603639587945b8b6051ae$"
+	}
+}
