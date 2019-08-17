@@ -37,6 +37,7 @@ function preload () {
     this.load.image('player', 'assets/player.png');
     this.load.image('rock', 'assets/rock.png');
     this.load.image('tiles', 'assets/tiletest3.png')
+    this.load.image('asteroid', 'assets/tiles/Asteroid/basic_asteroid_up.png' )
     this.load.tilemapTiledJSON("mymap", 'assets/testmap4.json');
     this.load.multiatlas('spaceman', '/assets/tiles/Character/spacesprite1.json', 'assets/tiles/Character');
 
@@ -50,6 +51,7 @@ function create () {
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
     const tileset = map.addTilesetImage("tiletest3", "tiles");
+    const tileset2 = map.addTilesetImage("asteroid", "asteroid");
     
     // Parameters: layer name (or index) from Tiled, tileset, x, y
     //background layer (no collisions)
@@ -80,7 +82,7 @@ function create () {
 
     //-- PHYSICS RULES --
     rocks = this.physics.add.group();
-    this.physics.add.collider(player, layer, function(){console.log("COLLIDING WITH TILEMAP")});
+    this.physics.add.collider(player, layer, function(){console.log("COLLIDING WITH TILEMAP");});
 
     //this.physics.add.collider(player, walls, stickToWall);
     //this.physics.add.collider(rocks, walls, destroyRock);
@@ -96,7 +98,6 @@ function create () {
 }
 
 function stickToWall() {
-
     var touching = player.body.touching;
 
     if (touching.none) {
