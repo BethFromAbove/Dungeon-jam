@@ -50,14 +50,14 @@ function create () {
 
     // Parameters are the name you gave the tileset in Tiled and then the key of the tileset image in
     // Phaser's cache (i.e. the name you used in preload)
-    const tileset = map.addTilesetImage("tiletest3", "tiles");
+    const tileset1 = map.addTilesetImage("tiletest3", "tiles");
     const tileset2 = map.addTilesetImage("asteroid", "asteroid");
     
     // Parameters: layer name (or index) from Tiled, tileset, x, y
     //background layer (no collisions)
-    const bg = map.createStaticLayer("background", tileset, 0, 0);
+    const bg = map.createStaticLayer("background", tileset1, 0, 0);
     //world layer  (collisions enabled)
-    const layer = map.createStaticLayer("world", tileset,0,0);
+    const layer = map.createStaticLayer("world", [tileset1, tileset2],0,0);
     layer.setCollisionBetween(0,230, true); 
 
 
