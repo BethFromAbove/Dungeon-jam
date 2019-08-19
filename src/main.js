@@ -24,7 +24,6 @@ var player;
 var playerDirection;
 var walls;
 var rocks;
-
 var cursors;
 
 var game = new Phaser.Game(config);
@@ -39,7 +38,7 @@ function preload () {
     this.load.image('tiles', 'assets/tiletest3.png')
     this.load.image('asteroid', 'assets/tiles/asteroid/asteroidtiles.png' )
     this.load.tilemapTiledJSON('mymap', 'assets/maplvl1.json');
-    this.load.multiatlas('spaceman', '/assets/tiles/character/spacesprite1.json', 'assets/tiles/Character');
+    this.load.multiatlas('spaceman', '/assets/tiles/character/spacesprite2.json', 'assets/tiles/Character');
 
 }
 
@@ -70,6 +69,13 @@ function create () {
         prefix: 'astropantsed', suffix: '.png'
     });
     this.anims.create({ key: 'confused', frames: confusedframes, frameRate: 4, repeat: -1 });
+
+
+    var confusedframes = this.anims.generateFrameNames('spaceman', {
+        start: 1, end: 4, zeroPad: 3,
+        prefix: 'astroturnright', suffix: '.png'
+    });
+    this.anims.create({ key: 'turnright', frames: confusedframes, frameRate: 4, repeat: 0 });
 
     //start player
     player.anims.play('confused', true);            
@@ -153,6 +159,7 @@ function attemptJumpThrow(context) {
                 r.setVelocityX(-600);
                 break;
             case 'RIGHT':
+                player.anims.play('turnright', true);
                 player.setVelocityY(0);
                 player.setVelocityX(-300);
                 r.setVelocityX(600);
