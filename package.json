@@ -1,0 +1,22 @@
+{
+  "name": "phaser-test",
+  "version": "1.0.0",
+  "description": "testing phaser",
+  "main": "src/core.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "author": "Kimbsy",
+  "license": "ISC",
+  "dependencies": {
+    "phaser": "^3.19.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BethFromAbove/Dungeon-jam.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BethFromAbove/Dungeon-jam/issues"
+  },
+  "homepage": "https://github.com/BethFromAbove/Dungeon-jam#readme"
+}
